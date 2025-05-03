@@ -16,6 +16,7 @@ export class EditComponent implements OnInit {
   private readonly _EmployeeManageService = inject(EmployeeManageService);
   private readonly _ActivatedRoute = inject(ActivatedRoute);
   private readonly _Router = inject(Router);
+  submitted:boolean = false
 
   private emp!:IEmployee;
 
@@ -44,12 +45,21 @@ export class EditComponent implements OnInit {
     if(this.EditGroup.valid){
       this._EmployeeManageService.EditEmployee(this._ActivatedRoute.snapshot.paramMap.get('id')!,this.EditGroup.value).subscribe({
         next: data => {
-          console.log(data);
+          this.submitted = true;
           
           this._Router.navigate([""])
         }
       })
     }
     this.EditGroup.markAsTouched
+  }
+
+  
+  confirmOut():boolean {
+    if(this.EditGroup.dirty && !this.submitted && this.EditGroup.value != this.emp)
+    {
+      return confirm("You Have Unsaved Changes!! Are You Sure You Want To Leave ??");
+    }
+    return true
   }
 }

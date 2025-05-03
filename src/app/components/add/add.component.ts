@@ -14,6 +14,7 @@ export class AddComponent {
   private readonly _FormBuilder = inject(FormBuilder);
   private readonly _EmployeeManageService = inject(EmployeeManageService);
   private readonly _Router = inject(Router);
+  submitted:boolean = false;
 
 
 
@@ -27,10 +28,22 @@ export class AddComponent {
   addEmployee(){
     if(this.AddGroup.valid){
       this._EmployeeManageService.AddEmployee(this.AddGroup.value).subscribe({
-        next: _ => this._Router.navigate([""])
+        
+        next: _ => {
+          this.submitted = true;
+          this._Router.navigate([""])
+        }
       })
     }
     this.AddGroup.markAsTouched
+  }
+
+  confirmOut():boolean {
+    if(this.AddGroup.dirty && !this.submitted)
+    {
+      return confirm("You Have Unsaved Changes!! Are You Sure You Want To Leave ??");
+    }
+    return true
   }
 
 }
