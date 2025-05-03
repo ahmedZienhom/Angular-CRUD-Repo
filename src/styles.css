@@ -1,0 +1,11 @@
+:root{
+    --main-color: #F7F9FB
+}
+
+.bg-main{
+    background-color: var(--main-color);
+}
+
+.text-main{
+    color: var(--main-color);
+}

@@ -1,0 +1,71 @@
+<div class="mb-4">
+    <button class="btn btn-primary text-capitalize ms-auto rounded-5a d-block" routerLink="addEmployee">add employee</button>
+</div>
+
+<section class="p-lg-2 bg-white text-capitalize rounded-3">
+    <h1 class="fs-3 my-3">manage Employee</h1>
+    
+    <div class="form-floating mb-3">
+      <input [(ngModel)]="term" type="text" class="form-control" id="floatingInput" placeholder="AhmedZienhom">
+      <label for="floatingInput">Search</label>
+    </div>
+  
+    <!-- Header -->
+    <ul class="bg-main text-center d-flex align-items-center justify-content-between p-lg-3 list-unstyled rounded-2">
+      <li>name</li>
+      <li>email</li>
+      <li>position</li>
+      <li>operators</li>
+    </ul>
+  
+    <!-- Loop over employees -->
+    @for (e of paginatedEmployees | search: term ; track e.id) {
+      <ul class="text-muted text-center d-flex align-items-center justify-content-between p-lg-3 list-unstyled rounded-2">
+        <li>{{e.firstName}} {{e.lastName}}</li>
+        <li class="ellipsis-text">{{e.email}}</li>
+        <li>{{e.position}}</li>
+        <li class="d-flex flex-column flex-lg-row gap-3">
+          <button class="btn btn-outline-warning" [routerLink]="['./edit/',e.id]" >Edit</button>
+          <button class="btn btn-outline-danger" type="button" (click)="openDeleteModal(e)">Delete</button>
+        </li>
+      </ul>
+    }
+  
+    <!-- Modal -->
+    @if (selectedEmployee) {
+        <div
+      class="modal fade show d-block"
+      tabindex="-1"
+      role="dialog"
+      style="background-color: rgba(0, 0, 0, 0.5);"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2 class="modal-title fs-5">Confirm Delete</h2>
+            <button type="button" class="btn-close" (click)="closeModal()" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <p>Are you sure you want to delete <strong>{{selectedEmployee.firstName}} {{selectedEmployee.lastName}}</strong>?</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="closeModal()">Close</button>
+            <button type="button" class="btn btn-danger" (click)="confirmDelete()">Delete</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    }
+  </section>
+  
+<div class="d-flex align-items-center justify-content-center mt-5 gap-3">
+  <button class="fixed-size rounded-circle" (click)="goToPage(currentPage - 1)">Prev</button>
+  @for (_ of arr; track $index;) {
+    <button
+    (click)="goToPage( $index + 1)"
+    [class.bg-primary]="currentPage === $index + 1" class="fixed-size rounded-circle">
+    {{ $index + 1 }}
+  </button>
+  }
+  <button class="fixed-size rounded-circle" (click)="goToPage(currentPage+1)">Next</button>
+</div>
