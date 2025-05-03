@@ -1,5 +1,5 @@
 <div class="mb-4">
-    <button class="btn btn-primary text-capitalize ms-auto rounded-5a d-block" routerLink="addEmployee">add employee</button>
+  <button class="btn btn-primary text-capitalize ms-auto rounded-5a d-block" routerLink="/addEmployee">Add Employee</button>
 </div>
 
 <section class="p-lg-2 bg-white text-capitalize rounded-3">
@@ -25,7 +25,7 @@
         <li class="ellipsis-text">{{e.email}}</li>
         <li>{{e.position}}</li>
         <li class="d-flex flex-column flex-lg-row gap-3">
-          <button class="btn btn-outline-warning" [routerLink]="['./edit/',e.id]" >Edit</button>
+          <button class="btn btn-outline-warning" [routerLink]="['/edit', e.id]">Edit</button>
           <button class="btn btn-outline-danger" type="button" (click)="openDeleteModal(e)">Delete</button>
         </li>
       </ul>
